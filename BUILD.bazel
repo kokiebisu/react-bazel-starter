@@ -1,0 +1,32 @@
+# using auto-generated rules
+# this shows us that rules_nodejs has told Bazel that a workspace named 
+# @npm is available. rules_nodejs will add index.bzl files exposing all the binaries the package manager installed
+load("@npm//@babel/cli:index.bzl", "babel")
+# load("@npm//mocha:index.bzl", "mocha_test")
+load("@npm//http-server:index.bzl", "http_server")
+
+babel(
+    name = "compile",
+    data = [
+        "app.js",
+        "es5.babelrc",
+        "@npm//@babel/preset-env",
+    ],
+    outs = ["app.es5.js"],
+    args = [
+        "app.js",
+        "--config-file",
+        "./$(execpath es5.babelrc)",
+        "--out-file",
+        "$(execpath app.es5.js)",
+    ],
+)
+
+http_server(
+    name = "server",
+    data = [
+        "index.html",
+        "app.es5.js"
+    ],
+    args = ["."]
+)
