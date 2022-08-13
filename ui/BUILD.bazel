@@ -1,0 +1,46 @@
+load("@npm//@bazel/typescript:index.bzl", "ts_project")
+load("@ui//webpack-cli:index.bzl", "webpack_cli")
+load("@ui//http-server:index.bzl", "http_server")
+
+package(default_visibility = ["//visibility:public"])
+
+ts_project(
+    name="app",
+    # glob is a quick way to select all the code,
+    # but has performance penalty in that Bazel must evaluate it.
+    srcs = glob(["**/*.tsx"]),
+    deps = [
+        "@ui//@types/react",
+        "@ui//@types/react-dom",
+        "@ui//react",
+        "@ui//react-dom"
+    ]
+)
+
+webpack_cli(
+    name = "bundle",
+    outs = ["app.bundle.js"],
+    args = [
+        "$(execpath index.js)",
+        "--config",
+        "$(execpath webpack.config.js)",
+        "-o",
+        "$@",
+    ],
+    data = [
+        "src/hello.js",
+        "index.js",
+        "webpack.config.js",
+        "@npm//:node_modules",
+        "@ui//:node_modules"
+    ]
+)
+
+http_server(
+    name = "server",
+    data = [
+        "app.bundle.js",
+        "index.html",
+    ],
+    templated_args = ["."],
+)
