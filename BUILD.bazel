@@ -24,6 +24,7 @@ webpack(
     ],
     data = [
         "index.js",
+        "hello.js",
         "webpack.config.js",
         "@npm//:node_modules",
     ]
