@@ -7,24 +7,22 @@
     "test": "bazel test //...",
     "serve": "ibazel run :server"
   },
-  "dependencies": {
-    "@babel/cli": "7.18.10",
-    "@babel/core": "7.18.10",
-    "@babel/preset-env": "7.18.10",
-    "domino": "2.1.6",
-    "http-server": "14.1.1",
-    "mocha": "10.0.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
-  },
   "devDependencies": {
-    "@bazel/bazelisk": "latest",
-    "@bazel/buildifier": "latest",
-    "@bazel/ibazel": "latest",
-    "@bazel/typescript": "5.5.3",
-    "@types/react": "18.0.17",
-    "@types/react-dom": "18.0.6",
-    "typescript": "latest",
-    "webpack-cli": "4.10.0"
+    "@bazel/buildifier": "^5.1.0",
+    "@bazel/ibazel": "^0.16.2",
+    "@bazel/typescript": "^5.5.3",
+    "@types/react": "^16.9.5",
+    "@types/react-dom": "^16.9.1",
+    "css-loader": "^3.2.0",
+    "csstype": "^2.2.0",
+    "http-server": "^0.11.1",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
+    "sass": "^1.23.0",
+    "style-loader": "^1.0.0",
+    "typescript": "^3.6.3",
+    "webpack": "^4.41.0",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.8.2"
   }
 }

@@ -1,69 +1,39 @@
 # using auto-generated rules
 # this shows us that rules_nodejs has told Bazel that a workspace named 
 # @npm is available. rules_nodejs will add index.bzl files exposing all the binaries the package manager installed
-# load("@npm//@babel/cli:index.bzl", "babel")
-# load("@npm//mocha:index.bzl", "mocha_test")
-# load("@npm//http-server:index.bzl", "http_server")
 load("@npm//@bazel/typescript:index.bzl", "ts_project")
-# load("@npm//webpack-cli:index.bzl", webpack = "webpack_cli")
+load("@npm//http-server:index.bzl", "http_server")
+load("@npm//webpack-cli:index.bzl", webpack = "webpack_cli")
 
 ts_project(
-    name = "app",
+    supports_workers = True,
     # glob is a quick way to select all the code,
     # but has performance penalty in that Bazel must evaluate it.
-    srcs = glob(["*.ts"]),
+    srcs = glob(["*.ts", "*.tsx"]),
 )
 
-# webpack(
-#     name = "bundle",
-#     outs = ["app.bundle.js"],
-#     args = [
-#         "$(locations //src:app.js)",
-#         "--config",
-#         "$(location //:webpack.config.js)",
-#         "-o",
-#         # all arguments of the shell cmd
-#         "$@",
-#         "--mode",
-#         "development",
-#     ],
-#     data = [
-#         "//:webpack.config.js",
-#     ]
-# )
+webpack(
+    name = "bundle",
+    outs = ["app.bundle.js"],
+    args = [
+        "$(execpath index.js)",
+        "--config",
+        "$(execpath webpack.config.js)",
+        "-o",
+        "$@",
+    ],
+    data = [
+        "index.js",
+        "webpack.config.js",
+        "@npm//:node_modules",
+    ]
+)
 
-
-
-# babel(
-#     name = "compile",
-#     data = [
-#         "app.js",
-#         "es5.babelrc",
-#         "@npm//@babel/preset-env",
-#     ],
-#     outs = ["app.es5.js"],
-#     args = [
-#         "app.js",
-#         "--config-file",
-#         "./$(execpath es5.babelrc)",
-#         "--out-file",
-#         "$(execpath app.es5.js)",
-#     ],
-# )
-
-# ts_devserver(
-#     name = "serve",
-#     port = 3000,
-#     serving_path = "/app.bundle.js",
-#     static_files = ["index.html"],
-#     deps = [":bundle"]
-# )
-
-# http_server(
-#     name = "server",
-#     data = [
-#         "index.html",
-#         "app.es5.js"
-#     ],
-#     args = ["."]
-# )
+http_server(
+    name = "server",
+    data = [
+        "app.bundle.js",
+        "index.html",
+    ],
+    templated_args = ["."],
+)
