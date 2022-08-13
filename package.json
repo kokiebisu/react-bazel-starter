@@ -13,12 +13,18 @@
     "@babel/preset-env": "7.18.10",
     "domino": "2.1.6",
     "http-server": "14.1.1",
-    "mocha": "10.0.0"
+    "mocha": "10.0.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "@babel/preset-es2015": "7.0.0-beta.53",
     "@bazel/bazelisk": "latest",
     "@bazel/buildifier": "latest",
-    "@bazel/ibazel": "latest"
+    "@bazel/ibazel": "latest",
+    "@bazel/typescript": "5.5.3",
+    "@types/react": "18.0.17",
+    "@types/react-dom": "18.0.6",
+    "typescript": "latest",
+    "webpack-cli": "4.10.0"
   }
 }
